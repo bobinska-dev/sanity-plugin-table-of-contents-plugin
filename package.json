@@ -49,6 +49,7 @@
     "watch": "pkg-utils watch --strict"
   },
   "dependencies": {
+    "@portabletext/toolkit": "^2.0.16",
     "@sanity/incompatible-plugin": "^1.0.4"
   },
   "devDependencies": {

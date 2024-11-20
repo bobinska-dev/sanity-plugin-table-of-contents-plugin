@@ -13,8 +13,8 @@ npm install sanity-plugin-table-of-contents
 Add it as a plugin in `sanity.config.ts` (or .js):
 
 ```ts
-import {defineConfig} from 'sanity'
-import {myPlugin} from 'sanity-plugin-table-of-contents'
+import { defineConfig } from 'sanity'
+import { myPlugin } from 'sanity-plugin-table-of-contents'
 
 export default defineConfig({
   //...
