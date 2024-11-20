@@ -12,13 +12,13 @@
     "realtime",
     "content"
   ],
-  "homepage": "https://github.com/bobinska-dev/table-of-contents-plugin#readme",
+  "homepage": "https://github.com/bobinska-dev/sanity-plugin-table-of-contents-plugin#readme",
   "bugs": {
-    "url": "https://github.com/bobinska-dev/table-of-contents-plugin/issues"
+    "url": "https://github.com/bobinska-dev/sanity-plugin-table-of-contents-plugin/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:bobinska-dev/table-of-contents-plugin.git"
+    "url": "git@github.com:bobinska-dev/sanity-plugin-table-of-contents-plugin.git"
   },
   "license": "MIT",
   "author": "Saskia Bobinska <bobinska.dev@gmail.com>",
