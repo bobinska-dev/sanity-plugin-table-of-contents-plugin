@@ -1,3 +1,5 @@
+> This is a **Sanity Studio v3** plugin.
+
 # sanity-plugin-table-of-contents
 
 > This plugin is available for Sanity Studio v3 and up.
@@ -51,3 +53,11 @@ on how to run this plugin with hotreload in the studio.
 ## Kudos
 
 Thanks to @jordanl17 for his help getting this over the line!
+
+
+### Release new version
+
+Run ["CI & Release" workflow](https://github.com/bobinska-dev/sanity-plugin-table-of-contents-plugin/actions/workflows/main.yml).
+Make sure to select the main branch and check "Release new version".
+
+Semantic release will only release on configured branches, so it is safe to run release on any branch.
