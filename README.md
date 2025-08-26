@@ -1,4 +1,4 @@
-> This is a **Sanity Studio v3** plugin.
+> This is a **Sanity Studio v3 & v4** plugin.
 
 # sanity-plugin-table-of-contents
 
