@@ -14,7 +14,7 @@ import {
 import { capitaliseFirstLetter } from '../../utils/capitaliseFirstLetter'
 import { getNestedIndentation } from '../../utils/getIndentation'
 import getTitle from '../../utils/getTitle'
-import { isPortableText, isPortableTextNew } from '../../utils/isPortableText'
+import { isPortableTextNew } from '../../utils/isPortableText'
 import { slugify } from '../../utils/slugify'
 import EmbeddedFieldsRenderer from './EmbeddedFieldsRenderer'
 import Pointer from './Pointer'
@@ -34,7 +34,7 @@ const SectionFieldsRenderer: FunctionComponent<SectionFieldsRendererProps> = (pr
 
   return embeddedFields.map((field) => {
     // * * Portable Text field
-    if (isArray(field.value) && isPortableText(field.value)) {
+    if (isArray(field.value) && isPortableTextNew(field.value)) {
       const fieldNamePTE = field.field
       const blocks = field.value as PortableTextBlock[]
 

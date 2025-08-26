@@ -7,6 +7,7 @@
 A plugin that adds a table of contents inspector to navigate your page builder arrays and portable text in documents, letting you quickly jump to a specific heading or custom block.
 
 ## Features
+
 - **Table of contents inspector**: Navigate your portable text in documents and quickly jump to a specific heading or custom block.
 - **Customisable**: Choose which types and fields to include in the table of contents.
 - **Easy to use**: Simple setup and configuration.
@@ -33,7 +34,7 @@ export default defineConfig({
     tableOfContentsPlugin({
       fieldNames: ['content', 'body'], // all array and Portable Text fields that should be included in the TOC
       documentTypes: ['page', 'news'], // add the TOC to specific document types
-    })
+    }),
   ],
 })
 ```
@@ -53,7 +54,6 @@ on how to run this plugin with hotreload in the studio.
 ## Kudos
 
 Thanks to @jordanl17 for his help getting this over the line!
-
 
 ### Release new version
 

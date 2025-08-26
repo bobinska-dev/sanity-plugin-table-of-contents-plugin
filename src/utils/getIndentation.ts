@@ -8,6 +8,7 @@ export const getNestedIndentation = (
   // find index of current block in the body array based on the _key
   const blockIndex = body.findIndex((b) => b._key === block._key)
 
+  // eslint-disable-next-line no-shadow
   const firstHeading = body.filter((block) =>
     (block as PortableTextTextBlock).style?.startsWith('h'),
   )[0]
@@ -20,14 +21,8 @@ export const getNestedIndentation = (
     }
     return 3
   }
-  if (
-    block._type === 'block' &&
-    (block as PortableTextTextBlock).style?.startsWith('h')
-  ) {
-    if (
-      !isSectionPTE &&
-      (block as PortableTextTextBlock).style === firstHeading.style
-    ) {
+  if (block._type === 'block' && (block as PortableTextTextBlock).style?.startsWith('h')) {
+    if (!isSectionPTE && (block as PortableTextTextBlock).style === firstHeading.style) {
       return 0
     }
 
