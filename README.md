@@ -1,8 +1,14 @@
 # sanity-plugin-table-of-contents
 
-> This is a **Sanity Studio v3** plugin.
+> This plugin is available for Sanity Studio v3 and up.
 
-## * * * * THIS IS NOT INSTALLABLE YET; WORK IN PROGRESS * * * * 
+A plugin that adds a table of contents inspector to navigate your page builder arrays and portable text in documents, letting you quickly jump to a specific heading or custom block.
+
+## Features
+- **Table of contents inspector**: Navigate your portable text in documents and quickly jump to a specific heading or custom block.
+- **Customisable**: Choose which types and fields to include in the table of contents.
+- **Easy to use**: Simple setup and configuration.
+- **Lightweight**: Minimal impact on your Studio's performance.
 
 ## Installation
 
@@ -16,11 +22,17 @@ Add it as a plugin in `sanity.config.ts` (or .js):
 
 ```ts
 import { defineConfig } from 'sanity'
-import { myPlugin } from 'sanity-plugin-table-of-contents'
+import { tableOfContentsPlugin } from 'sanity-plugin-table-of-contents'
 
 export default defineConfig({
   //...
-  plugins: [myPlugin({})],
+  plugins: [
+    //...
+    tableOfContentsPlugin({
+      fieldNames: ['content', 'body'], // all array and Portable Text fields that should be included in the TOC
+      documentTypes: ['page', 'news'], // add the TOC to specific document types
+    })
+  ],
 })
 ```
 
