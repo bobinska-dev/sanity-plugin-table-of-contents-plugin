@@ -2,6 +2,9 @@
 
 This is a plugin that adds a table of contents inspector to navigate your page builder arrays and Portable Text in documents, letting you quickly jump to a specific heading or custom block - even for nested Portable Text fields.
 
+<img width="1014" height="801" alt="Screenshot 2025-08-26 at 21 00 18" src="https://github.com/user-attachments/assets/9ba5cb45-bb95-4a71-9b08-e7dc018ce214" />
+
+
 ## Features
 
 - **Table of contents inspector**: Navigate your portable text in documents and quickly jump to a specific heading or custom block.
