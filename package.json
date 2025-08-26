@@ -50,7 +50,9 @@
   },
   "dependencies": {
     "@portabletext/toolkit": "^3.0.0",
-    "@sanity/incompatible-plugin": "^1.0.5"
+    "@sanity/incompatible-plugin": "^1.0.5",
+    "@sanity/icons": "^3.7.4",
+    "@sanity/ui": "^3.0.7"
   },
   "devDependencies": {
     "@sanity/pkg-utils": "^8.1.0",
