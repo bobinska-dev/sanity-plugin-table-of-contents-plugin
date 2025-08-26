@@ -1,5 +1,3 @@
-> This is a **Sanity Studio v3 & v4** plugin.
-
 # sanity-plugin-table-of-contents
 
 > This plugin is available for Sanity Studio v3 and up.
