@@ -1,8 +1,8 @@
-import { toPlainText } from '@portabletext/toolkit'
-import { Card, Text } from '@sanity/ui'
+import { Box, Card, Text, Tooltip } from '@sanity/ui'
 import { FunctionComponent } from 'react'
-import { Path, PortableTextBlock, isString } from 'sanity'
-import { isPortableText } from '../../utils/isPortableText'
+import { Path } from 'sanity'
+
+import getTitle from '../../utils/getTitle'
 import Pointer from './Pointer'
 
 export interface EmbeddedFieldsRendererProps {
@@ -17,39 +17,49 @@ const EmbeddedFieldsRenderer: FunctionComponent<EmbeddedFieldsRendererProps> = (
 
   return fieldValue.map((item) => {
     // get title of the item
-    const itemTitle =
-      item.title && isString(item.title)
-        ? item.title
-        : isPortableText(item.title as any)
-          ? toPlainText(item.title as PortableTextBlock[])
-          : arraySchemaTypeTitle
+    const itemTitle = getTitle(item, arraySchemaTypeTitle)
     // item path
     const itemPath = fieldPath.concat([{ _key: item._key as string }, 'title'])
     return (
       <Card
+        key={item._key as string}
         onClick={() => handleOpen(itemPath)}
         paddingLeft={5}
         paddingBottom={1}
         as="li"
-        key={item._key as string}
       >
-        <Pointer gap={2} align={'flex-start'} justify={'flex-start'}>
-          {/*
-           * * * TITLE * * *
-           */}
-          <Text
-            size={1}
-            muted={true}
-            style={{
-              fontStyle: 'italic',
-            }}
-          >
-            {itemTitle}
-          </Text>
-          <Text id={'arrow'} size={1}>
-            →
-          </Text>
-        </Pointer>
+        {/*
+         * * * TOOL TIP * * *
+         */}
+        <Tooltip
+          content={
+            <Box padding={2}>
+              <Text size={1}>In: {arraySchemaTypeTitle}</Text>
+            </Box>
+          }
+          placement="left"
+          animate
+          portal
+          arrow
+        >
+          <Pointer gap={2} align={'flex-start'} justify={'flex-start'}>
+            {/*
+             * * * TITLE * * *
+             */}
+            <Text
+              size={1}
+              muted
+              style={{
+                fontStyle: 'italic',
+              }}
+            >
+              {itemTitle}
+            </Text>
+            <Text id={'arrow'} size={1}>
+              →
+            </Text>
+          </Pointer>
+        </Tooltip>
       </Card>
     )
   })

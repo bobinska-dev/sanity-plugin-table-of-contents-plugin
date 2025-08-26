@@ -1,6 +1,7 @@
 import { PortableTextBlock } from 'sanity'
-import { checkObjectForKeys } from '../../utils/checkObjectForKeys'
-import { Section } from '../components/InspectorBody'
+
+import { Section } from '../inspector/components/InspectorBody'
+import { checkObjectForKeys } from './checkObjectForKeys'
 
 export const getEmbeddedFields = (
   section: Section,
@@ -9,7 +10,7 @@ export const getEmbeddedFields = (
   // check if other fields in this section are defined in fieldNames
   const embeddedFields = checkObjectForKeys(section, fieldNames)
   if (embeddedFields.length === 0) {
-    return
+    return undefined
   }
   return (
     embeddedFields

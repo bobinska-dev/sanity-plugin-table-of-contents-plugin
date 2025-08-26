@@ -4,11 +4,12 @@ import {
   ArraySchemaType,
   BaseFormNode,
   FieldMember,
+  isArray,
   Path,
   PortableTextBlock,
   SchemaType,
-  isArray,
 } from 'sanity'
+
 import PortableTextRenderer from './PortableTextRenderer'
 import { SectionRenderer } from './SectionRenderer'
 
@@ -17,6 +18,12 @@ interface FieldRendererProps {
   fieldNames: string[]
   handleOpen: (path: Path) => void
 }
+/** ## Field Renderer
+ *
+ * This component is responsible for rendering the fields defined in the plugin config in the inspector.
+ *
+ * It checks if the field is a Portable Text field or an array of objects and renders the appropriate component.
+ * */
 const FieldRenderer: FunctionComponent<FieldRendererProps> = (props) => {
   const { contentFieldMembers, fieldNames, handleOpen } = props
   return contentFieldMembers.map((member) => {
@@ -29,7 +36,7 @@ const FieldRenderer: FunctionComponent<FieldRendererProps> = (props) => {
     if (!isArray(member.field.value)) {
       console.error(`Table Of Content Plugin Error: Field "${member.name}" is not an array.`)
       return (
-        <Card tone={'caution'}>
+        <Card tone={'caution'} key={member.key}>
           Error when resolving fields... Please check the console for more information.
         </Card>
       )
@@ -44,6 +51,7 @@ const FieldRenderer: FunctionComponent<FieldRendererProps> = (props) => {
           fieldSchemaType={fieldSchemaType}
           fieldValue={fieldValue as PortableTextBlock[]}
           handleOpen={handleOpen}
+          key={member.key}
         />
       )
     }
@@ -58,9 +66,11 @@ const FieldRenderer: FunctionComponent<FieldRendererProps> = (props) => {
           fieldValue={fieldValue}
           fieldNames={fieldNames}
           handleOpen={handleOpen}
+          key={member.key}
         />
       )
     }
+    return null
   })
 }
 export default FieldRenderer

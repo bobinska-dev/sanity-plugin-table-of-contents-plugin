@@ -6,6 +6,7 @@ export default showIncompatiblePluginDialog({
   versions: {
     v3: version,
     v2: undefined,
+    v4: version,
   },
   sanityExchangeUrl,
 })

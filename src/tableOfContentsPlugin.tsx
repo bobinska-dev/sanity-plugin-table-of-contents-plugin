@@ -1,10 +1,11 @@
 import { definePlugin } from 'sanity'
+
 import { EnglishResourceBundle } from './i18n/bundle'
 import { tableOfContentsInspector } from './inspector'
 
 /** ## Table of Content Plugin Options
  *
- * This plugin is responsible for adding a “Table of Content” inspector to the document forms.
+ * This plugin is responsible for adding a “Table of Content” inspector to the document forms.
  *
  *
  *
@@ -18,9 +19,9 @@ export interface TableOfContentsPluginOptions {
 
 /** ## Table of contents plugin
  *
- * This plugin is responsible for adding a “Table of Content” inspector to the document forms defined in the `documentTypes` array.
+ * This plugin is responsible for adding a “Table of Content" inspector to the document forms defined in the `documentTypes` array.
  *
- * @param fieldNames - All All Portable Text and other arrays of objects that should be used (for example page builder arrays, nut also embedded array fields that are used in Portable Text and are significant for the document structure)
+ * @param fieldNames - All Portable Text and other arrays of objects that should be used (for example page builder arrays, but also embedded array fields that are used in Portable Text and are significant for the document structure)
  *
  * @param documentTypes - All document types that the plugin should be used for
  *
@@ -44,7 +45,7 @@ export const tableOfContentsPlugin = definePlugin<TableOfContentsPluginOptions>(
       },
     },
     i18n: {
-      bundles: (prev, context) => [...prev, EnglishResourceBundle],
+      bundles: (prev) => [...prev, EnglishResourceBundle],
     },
   }),
 )

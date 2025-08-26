@@ -1,8 +1,9 @@
-import { toPlainText } from '@portabletext/toolkit'
 import { Box, Card, Text, Tooltip } from '@sanity/ui'
 import { FunctionComponent } from 'react'
-import { ArraySchemaType, ObjectSchemaType, Path, PortableTextBlock, isString } from 'sanity'
-import { getEmbeddedFields } from '../utils/getEmbeddedFields'
+import { ArraySchemaType, ObjectSchemaType, Path, PortableTextBlock } from 'sanity'
+
+import { getEmbeddedFields } from '../../utils/getEmbeddedFields'
+import getTitle from '../../utils/getTitle'
 import { Section } from './InspectorBody'
 import Pointer from './Pointer'
 import SectionFieldsRenderer from './SectionFieldsRenderer'
@@ -19,18 +20,18 @@ export const SectionRenderer: FunctionComponent<SectionRendererProps> = (props) 
   const { fieldValue, fieldSchemaType, fieldPath, fieldNames, handleOpen } = props
 
   return (fieldValue as Section[]).map((section: Section) => {
-    // find the title of the section
-    const sectionTitle = fieldSchemaType.of.find((ofType) => ofType.name === section._type)?.title
-    const title = isString(section.title)
-      ? section.title
-      : toPlainText(section.title!) || sectionTitle
+    const sectionSchemaType = fieldSchemaType.of.find(
+      (ofType) => ofType.name === section._type,
+    ) as ObjectSchemaType
+
+    // find the title of the section type
+    const sectionTypeTitle = sectionSchemaType?.title
+    // Get a title of the section
+    const title = getTitle(section, sectionTypeTitle)
 
     // Section path
     const sectionPath = fieldPath.concat([{ _key: section._key }])
     const sectionTitlePath = sectionPath.concat(['title'])
-    const sectionSchemaType = fieldSchemaType.of.find(
-      (ofType) => ofType.name === section._type,
-    ) as ObjectSchemaType
 
     // find the embedded fields in section object which match the otherFields array entries returning an array of objects
     const embeddedFields = getEmbeddedFields(section, fieldNames)
@@ -50,10 +51,13 @@ export const SectionRenderer: FunctionComponent<SectionRendererProps> = (props) 
           <Tooltip
             content={
               <Box padding={2}>
-                <Text size={1}>{sectionTitle}</Text>
+                <Text size={1}>In: {sectionTypeTitle}</Text>
               </Box>
             }
-            placement="top"
+            placement="left"
+            animate
+            arrow
+            portal
           >
             {/*
              * * * * * SECTION HEADINGS * * * * *
@@ -92,7 +96,7 @@ export const SectionRenderer: FunctionComponent<SectionRendererProps> = (props) 
             fieldSchemaType={fieldSchemaType}
             sectionSchemaType={sectionSchemaType}
             // debugging
-            sectionTitle={sectionTitle!}
+            sectionTitle={sectionTypeTitle!}
           />
         )}
       </>

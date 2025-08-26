@@ -1,19 +1,21 @@
-import { toPlainText } from '@portabletext/toolkit'
 import { Box, Card, Stack, Text, Tooltip } from '@sanity/ui'
 import { FunctionComponent } from 'react'
 import {
   ArraySchemaType,
-  ObjectSchemaType,
-  Path,
-  PortableTextBlock,
-  PortableTextTextBlock,
   isArray,
   isPortableTextTextBlock,
+  ObjectSchemaType,
+  Path,
   pathToString,
+  PortableTextBlock,
+  PortableTextTextBlock,
 } from 'sanity'
+
 import { capitaliseFirstLetter } from '../../utils/capitaliseFirstLetter'
-import { isPortableText } from '../../utils/isPortableText'
-import { getNestedIndentation } from '../utils/getIndentation'
+import { getNestedIndentation } from '../../utils/getIndentation'
+import getTitle from '../../utils/getTitle'
+import { isPortableText, isPortableTextNew } from '../../utils/isPortableText'
+import { slugify } from '../../utils/slugify'
 import EmbeddedFieldsRenderer from './EmbeddedFieldsRenderer'
 import Pointer from './Pointer'
 
@@ -28,16 +30,8 @@ export interface SectionFieldsRendererProps {
 }
 
 const SectionFieldsRenderer: FunctionComponent<SectionFieldsRendererProps> = (props) => {
-  const {
-    embeddedFields,
-    fieldSchemaType,
-    sectionPath,
-    fieldNames,
-    handleOpen,
-    sectionTitle,
-    sectionSchemaType,
-  } = props
-  // console.log('* * EMBEDDED FIELDS * *', embeddedFields)
+  const { embeddedFields, sectionPath, handleOpen, sectionTitle, sectionSchemaType } = props
+
   return embeddedFields.map((field) => {
     // * * Portable Text field
     if (isArray(field.value) && isPortableText(field.value)) {
@@ -54,7 +48,7 @@ const SectionFieldsRenderer: FunctionComponent<SectionFieldsRendererProps> = (pr
         return null
       }
       const pteSchemaType = sectionSchemaType.fields.find(
-        (field) => field.name === fieldNamePTE,
+        (fieldMember) => fieldMember.name === fieldNamePTE,
       ) as ArraySchemaType<PortableTextBlock>
 
       return headingsAndCustomBlocks.map((block) => {
@@ -68,66 +62,16 @@ const SectionFieldsRenderer: FunctionComponent<SectionFieldsRendererProps> = (pr
             ? sectionPath.concat([fieldNamePTE, { _key: block._key }])
             : (sectionPath.concat([fieldNamePTE, { _key: block._key }, 'title']) as Path)
 
+        const title = getTitle(block, blockSchemaTitle)
         return (
           <Card
             onClick={() => handleOpen(blockPath)}
+            aria-label={`Open editor for ${blockSchemaTitle}`}
             marginLeft={indentation}
             paddingLeft={2}
             paddingBottom={1}
             as="li"
-          >
-            <Pointer gap={2} align={'center'} justify={'flex-start'}>
-              {/*
-               * * * * * H INDICATOR * * * * *
-               */}
-              {isPortableTextTextBlock(block) && block.style && (
-                <Text size={0} muted>
-                  {capitaliseFirstLetter(block.style as string)}:
-                </Text>
-              )}
-              {/*
-               * * * * * TITLE * * * * *
-               */}
-              <Text
-                size={1}
-                muted={Boolean(!block.style)}
-                style={{
-                  fontStyle: block.style ? 'inherit' : 'italic',
-                }}
-              >
-                {isPortableTextTextBlock(block)
-                  ? toPlainText([block])
-                  : block.body
-                    ? `${blockSchemaTitle} - ${toPlainText((block as any).body).substring(0, 60)} ...`
-                    : `${blockSchemaTitle}`}
-              </Text>
-              <Text id={'arrow'} size={1}>
-                →
-              </Text>
-            </Pointer>
-          </Card>
-        )
-      })
-    }
-    // * * Array field
-    if (!isPortableText(field.value) && isArray(field.value)) {
-      const fieldNameArray = field.field
-      const arraySchemaType = sectionSchemaType.fields.find(
-        (field) => field.name === fieldNameArray,
-      ) as ArraySchemaType<unknown>
-      const fieldValueArray = field.value as { [key: string]: unknown }[]
-      const arraySchemaTypeTitle = arraySchemaType?.title || capitaliseFirstLetter(fieldNameArray)
-
-      const fieldPath = sectionPath.concat([fieldNameArray]) as Path
-
-      return (
-        <Stack as="ul" space={2} paddingX={3}>
-          <Card
-            onClick={() => handleOpen(fieldPath)}
-            paddingLeft={4}
-            paddingBottom={1}
-            as="li"
-            key={pathToString(fieldPath)}
+            key={block._key}
           >
             {/*
              * * * TOOL TIP * * *
@@ -135,10 +79,71 @@ const SectionFieldsRenderer: FunctionComponent<SectionFieldsRendererProps> = (pr
             <Tooltip
               content={
                 <Box padding={2}>
-                  <Text size={1}>{sectionTitle}</Text>
+                  <Text size={1}>In: {sectionTitle}</Text>
                 </Box>
               }
-              placement="top"
+              placement="left"
+              animate
+              portal
+              arrow
+            >
+              <Pointer gap={2} align={'center'} justify={'flex-start'}>
+                {/*
+                 * * * * * H INDICATOR * * * * *
+                 */}
+                {isPortableTextTextBlock(block) && block.style && (
+                  <Text size={0} muted>
+                    {capitaliseFirstLetter(block.style as string)}:
+                  </Text>
+                )}
+                {/*
+                 * * * * * TITLE * * * * *
+                 */}
+                <Text
+                  size={1}
+                  muted={Boolean(!block.style)}
+                  style={{
+                    fontStyle: block.style ? 'inherit' : 'italic',
+                  }}
+                >
+                  {title}
+                </Text>
+                <Text id={'arrow'} size={1}>
+                  →
+                </Text>
+              </Pointer>
+            </Tooltip>
+          </Card>
+        )
+      })
+    }
+    // * * Array field
+    if (!isPortableTextNew(field.value) && isArray(field.value)) {
+      const fieldNameArray = field.field
+      const arraySchemaType = sectionSchemaType.fields.find(
+        (fieldMember) => fieldMember.name === fieldNameArray,
+      ) as ArraySchemaType<unknown>
+      const fieldValueArray = field.value as { [key: string]: unknown }[]
+      const arraySchemaTypeTitle = arraySchemaType?.title || capitaliseFirstLetter(fieldNameArray)
+
+      const fieldPath = sectionPath.concat([fieldNameArray]) as Path
+
+      return (
+        <Stack as="ul" space={2} paddingX={3} key={pathToString(fieldPath)}>
+          <Card onClick={() => handleOpen(fieldPath)} paddingLeft={4} paddingBottom={1} as="li">
+            {/*
+             * * * TOOL TIP * * *
+             */}
+            <Tooltip
+              content={
+                <Box padding={2}>
+                  <Text size={1}>In: {sectionTitle}</Text>
+                </Box>
+              }
+              placement="left"
+              animate
+              portal
+              arrow
             >
               <Pointer gap={2} align={'flex-start'} justify={'flex-start'}>
                 {/*
@@ -146,7 +151,7 @@ const SectionFieldsRenderer: FunctionComponent<SectionFieldsRendererProps> = (pr
                  */}
                 <Text
                   size={0}
-                  muted={true}
+                  muted
                   style={{
                     fontStyle: 'italic',
                   }}
@@ -170,7 +175,7 @@ const SectionFieldsRenderer: FunctionComponent<SectionFieldsRendererProps> = (pr
     }
 
     return (
-      <Card tone="critical" shadow={1}>
+      <Card tone="critical" shadow={1} key={`error-item-${slugify(field.field)}`}>
         <Text muted size={0} style={{ fontStyle: 'italic' }}>
           Oh oh... something went wrong.
         </Text>

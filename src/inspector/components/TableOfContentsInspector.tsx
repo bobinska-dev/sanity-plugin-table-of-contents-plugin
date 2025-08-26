@@ -1,6 +1,7 @@
 import { Flex } from '@sanity/ui'
 import { ComponentType } from 'react'
 import { DocumentInspectorProps, useTranslation } from 'sanity'
+
 import { TableOfContentsPluginOptions } from '../../tableOfContentsPlugin'
 import InspectorBody from './InspectorBody'
 import { InspectorHeader } from './InspectorHeader'

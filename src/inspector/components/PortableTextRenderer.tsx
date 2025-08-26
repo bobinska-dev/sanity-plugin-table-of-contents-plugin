@@ -1,15 +1,16 @@
-import { toPlainText } from '@portabletext/toolkit'
 import { Card, Text } from '@sanity/ui'
 import { FunctionComponent } from 'react'
 import {
   ArraySchemaType,
+  isPortableTextTextBlock,
   Path,
   PortableTextBlock,
   PortableTextTextBlock,
-  isPortableTextTextBlock,
 } from 'sanity'
+
 import { capitaliseFirstLetter } from '../../utils/capitaliseFirstLetter'
-import { getNestedIndentation } from '../utils/getIndentation'
+import { getNestedIndentation } from '../../utils/getIndentation'
+import getTitle from '../../utils/getTitle'
 import Pointer from './Pointer'
 
 interface PortableTextRendererProps {
@@ -29,10 +30,12 @@ const PortableTextRenderer: FunctionComponent<PortableTextRendererProps> = (prop
     .map((block: PortableTextBlock) => {
       // * Preparation
       const indentation = getNestedIndentation(block, fieldValue as PortableTextBlock[])
-      const customBlockTitle = fieldSchemaType.of.find(
-        (ofType) => ofType.name === block._type,
-      )?.title
       const blockPath = fieldPath.concat([{ _key: block._key }])
+
+      const blockType = fieldSchemaType.of.find((ofType) => ofType.name === block._type)
+      const customBlockTitle = blockType?.title
+
+      const title = getTitle(block, customBlockTitle)
 
       return (
         <Card
@@ -62,11 +65,7 @@ const PortableTextRenderer: FunctionComponent<PortableTextRendererProps> = (prop
                 fontStyle: block.style ? 'inherit' : 'italic',
               }}
             >
-              {isPortableTextTextBlock(block)
-                ? toPlainText([block])
-                : block.body
-                  ? `${customBlockTitle} - ${toPlainText((block as any).body).substring(0, 60)} ...`
-                  : `${customBlockTitle}`}
+              {title}
             </Text>
             <Text id={'arrow'} size={1}>
               →

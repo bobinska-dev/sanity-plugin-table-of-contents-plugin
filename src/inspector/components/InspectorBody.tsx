@@ -2,6 +2,7 @@ import { Card, Stack, Text } from '@sanity/ui'
 import { ComponentType, useCallback } from 'react'
 import { FieldMember, Path, PortableTextBlock } from 'sanity'
 import { useDocumentPane } from 'sanity/structure'
+
 import { TableOfContentsPluginOptions } from '../../tableOfContentsPlugin'
 import FieldRenderer from './FieldRenderer'
 
@@ -25,8 +26,8 @@ const InspectorBody: ComponentType<InspectorBodyProps> = (props) => {
   // * Open nested buttons input dialog on click
   const handleOpen = useCallback(
     (path: Path) => {
-      onPathOpen(path)
       onFocus(path)
+      onPathOpen(path)
     },
     [onFocus, onPathOpen],
   )

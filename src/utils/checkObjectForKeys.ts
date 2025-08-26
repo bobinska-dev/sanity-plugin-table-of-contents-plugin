@@ -1,7 +1,10 @@
 /** ### Type Guard Function:
  * The `hasProperty` function checks if the given property exists on the given object.
  */
-export const hasProperty = (object: any, property: string): object is { [key: string]: any } => {
+export const hasProperty = (
+  object: Record<string, unknown>,
+  property: string,
+): object is { [key: string]: unknown } => {
   return property in object
 }
 
@@ -13,6 +16,6 @@ export const hasProperty = (object: any, property: string): object is { [key: st
  * @param fieldNames - The keys to check for in the object.
  */
 export const checkObjectForKeys = (
-  object: { [key: string]: any },
+  object: { [key: string]: unknown },
   fieldNames: string[],
 ): string[] => Object.keys(object).filter((key) => fieldNames.includes(key))
