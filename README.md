@@ -1,10 +1,6 @@
-> This is a **Sanity Studio v3** plugin.
+# Table of Contents for your Sanity Studio
 
-# sanity-plugin-table-of-contents
-
-> This plugin is available for Sanity Studio v3 and up.
-
-A plugin that adds a table of contents inspector to navigate your page builder arrays and portable text in documents, letting you quickly jump to a specific heading or custom block.
+This is a plugin that adds a table of contents inspector to navigate your page builder arrays and Portable Text in documents, letting you quickly jump to a specific heading or custom block - even for nested Portable Text fields.
 
 ## Features
 
