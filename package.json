@@ -78,6 +78,11 @@
     "react": "^18",
     "sanity": "^3"
   },
+  "sanityPlugin": {
+    "verifyPackage": {
+      "eslintImports": false
+    }
+  },
   "engines": {
     "node": ">=18"
   }
