@@ -52,7 +52,7 @@ on how to run this plugin with hotreload in the studio.
 
 ## Kudos
 
-Thanks to @jordanl17 for his help getting this over the line!
+Thanks to [@jordanl17](https://github.com/jordanl17) for his help getting this over the line!
 
 ### Release new version
 
