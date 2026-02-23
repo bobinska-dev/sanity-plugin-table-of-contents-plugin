@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-table-of-contents",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Add a table of contents to your documents for page building or long-form content in Portable Text (PT). You can configure which array or PT fields should be taken into account. The plugin will then generate a list with links from each entry to the corresponding block or array item in the document editor.",
   "keywords": [
     "sanity",
@@ -53,43 +53,43 @@
     "@portabletext/toolkit": "^5.0.1",
     "@sanity/icons": "^3.7.4",
     "@sanity/incompatible-plugin": "^1.0.5",
-    "@sanity/ui": "^3.1.11"
+    "@sanity/ui": "^3.1.11",
+    "sanity": "^5.11.0",
+    "styled-components": "^6.3.11"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.3.0",
-    "@commitlint/config-conventional": "^20.3.0",
-    "@eslint/compat": "^2.0.0",
-    "@eslint/eslintrc": "^3.3.3",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
+    "@eslint/compat": "^2.0.2",
+    "@eslint/eslintrc": "^3.3.4",
     "@eslint/js": "^9.39.2",
-    "@sanity/pkg-utils": "^10.2.5",
+    "@sanity/pkg-utils": "^10.4.4",
     "@sanity/plugin-kit": "^4.0.20",
     "@sanity/semantic-release-preset": "^6.0.0",
-    "@types/react": "^19.2.7",
-    "@typescript-eslint/eslint-plugin": "^8.51.0",
-    "@typescript-eslint/parser": "^8.51.0",
+    "@types/react": "^19.2.14",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-sanity": "^7.1.4",
-    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "globals": "^17.0.0",
+    "globals": "^17.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.7.4",
-    "prettier-plugin-packagejson": "^2.5.20",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "sanity": "^5.1.0",
-    "styled-components": "^6.1.19",
+    "prettier": "^3.8.1",
+    "prettier-plugin-packagejson": "^3.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "typescript": "^5.9.3"
-  },
-  "peerDependencies": {
-    "react": "^18",
-    "sanity": "^3 || ^4"
   },
   "engines": {
     "node": ">=18"
+  },
+  "overrides": {
+    "minimatch": "^10.2.1",
+    "tmp": "^0.2.4"
   },
   "sanityPlugin": {
     "verifyPackage": {
