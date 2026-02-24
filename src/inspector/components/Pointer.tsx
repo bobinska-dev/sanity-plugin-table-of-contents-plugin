@@ -1,5 +1,5 @@
 import { Flex } from '@sanity/ui'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 const Pointer = styled(Flex)`
   cursor: pointer;

@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-table-of-contents",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Add a table of contents to your documents for page building or long-form content in Portable Text (PT). You can configure which array or PT fields should be taken into account. The plugin will then generate a list with links from each entry to the corresponding block or array item in the document editor.",
   "keywords": [
     "sanity",
@@ -88,7 +88,6 @@
     "node": ">=18"
   },
   "overrides": {
-    "minimatch": "^10.2.1",
     "tmp": "^0.2.4"
   },
   "sanityPlugin": {
