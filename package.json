@@ -51,11 +51,7 @@
   },
   "dependencies": {
     "@portabletext/toolkit": "^5.0.1",
-    "@sanity/icons": "^3.7.4",
-    "@sanity/incompatible-plugin": "^1.0.5",
-    "@sanity/ui": "^3.1.11",
-    "sanity": "^5.11.0",
-    "styled-components": "^6.3.11"
+    "@sanity/incompatible-plugin": "^1.0.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
@@ -83,6 +79,14 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@sanity/icons": "^3.7.4",
+    "@sanity/ui": "^3.1.11",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "sanity": "^5.11.0",
+    "styled-components": "^6.3.11"
   },
   "engines": {
     "node": ">=18"
