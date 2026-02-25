@@ -1,5 +1,5 @@
 import { Card, Stack, Text } from '@sanity/ui'
-import { ComponentType, useCallback } from 'react'
+import { ComponentType } from 'react'
 import { FieldMember, Path, PortableTextBlock } from 'sanity'
 import { useDocumentPane } from 'sanity/structure'
 
@@ -24,13 +24,11 @@ const InspectorBody: ComponentType<InspectorBodyProps> = (props) => {
   // * HOOKS
   const { onFocus, onPathOpen, formState } = useDocumentPane()
   // * Open nested buttons input dialog on click
-  const handleOpen = useCallback(
-    (path: Path) => {
-      onFocus(path)
-      onPathOpen(path)
-    },
-    [onFocus, onPathOpen],
-  )
+  const handleOpen = (path: Path) => {
+    onFocus(path)
+    onPathOpen(path)
+  }
+
   // * MISC
   const fieldNames = config.fieldNames
   const documentValue = formState?.value
