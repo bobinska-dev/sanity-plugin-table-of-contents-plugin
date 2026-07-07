@@ -1,6 +1,7 @@
 {
   "name": "sanity-plugin-table-of-contents",
   "version": "1.0.7",
+  "packageManager": "pnpm@11.10.0",
   "description": "Add a table of contents to your documents for page building or long-form content in Portable Text (PT). You can configure which array or PT fields should be taken into account. The plugin will then generate a list with links from each entry to the corresponding block or array item in the document editor.",
   "keywords": [
     "sanity",
@@ -18,16 +19,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:bobinska-dev/sanity-plugin-table-of-contents-plugin.git"
+    "url": "git+https://github.com/bobinska-dev/sanity-plugin-table-of-contents-plugin.git"
   },
   "license": "MIT",
   "author": "Saskia Bobinska <bobinska.dev@gmail.com>",
   "sideEffects": false,
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
@@ -36,22 +36,23 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "sanity.json",
-    "src",
-    "v2-incompatible.js"
+    "src"
   ],
+  "browserslist": "extends @sanity/browserslist-config",
   "scripts": {
-    "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
+    "build": "pkg-utils build --strict --check --clean",
+    "dev": "pnpm --filter testing-studio dev",
     "format": "prettier --write --cache --ignore-unknown .",
     "link-watch": "plugin-kit link-watch",
     "lint": "eslint .",
+    "prepare": "husky",
     "prepublishOnly": "npm run build",
-    "watch": "pkg-utils watch --strict",
-    "prepare": "husky"
+    "watch": "pkg-utils watch --strict"
   },
   "dependencies": {
-    "@portabletext/toolkit": "^5.0.1",
-    "@sanity/incompatible-plugin": "^1.0.5"
+    "@portabletext/toolkit": "^5.0.2",
+    "@sanity/icons": "^3.7.4",
+    "@sanity/ui": "^3.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
@@ -59,12 +60,14 @@
     "@eslint/compat": "^2.0.2",
     "@eslint/eslintrc": "^3.3.4",
     "@eslint/js": "^9.39.2",
-    "@sanity/pkg-utils": "^10.4.4",
-    "@sanity/plugin-kit": "^4.0.20",
+    "@sanity/browserslist-config": "^1.0.5",
+    "@sanity/pkg-utils": "^10.9.0",
     "@sanity/semantic-release-preset": "^6.0.0",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
+    "babel-plugin-styled-components": "^2.3.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-sanity": "^7.1.4",
@@ -76,27 +79,25 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "prettier-plugin-packagejson": "^3.0.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sanity": "^6.3.0",
+    "styled-components": "^6.4.3",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@sanity/icons": "^3.7.4",
-    "@sanity/ui": "^3.1.11",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "sanity": "^5.11.0",
-    "styled-components": "^6.3.11"
+    "react": "^19",
+    "react-dom": "^19",
+    "sanity": "^6",
+    "styled-components": "^6"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.12"
   },
-  "overrides": {
-    "tmp": "^0.2.4"
-  },
-  "sanityPlugin": {
-    "verifyPackage": {
-      "eslintImports": false
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
     }
   }
 }

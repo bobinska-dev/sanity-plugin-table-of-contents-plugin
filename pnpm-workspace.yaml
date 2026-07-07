@@ -1,3 +1,28 @@
 packages:
   - '.'
-  - 'studio'
+  - 'testing-studio'
+
+# esbuild's postinstall fetches its platform-specific binary; approve its build
+# script so pnpm 11 doesn't fail with ERR_PNPM_IGNORED_BUILDS. pnpm 11 replaced
+# the old `onlyBuiltDependencies` list with this `allowBuilds` map.
+allowBuilds:
+  esbuild: true
+
+# Dependency overrides live here (NOT package.json's `pnpm.overrides`): pnpm 11 in
+# CI reads workspace settings from pnpm-workspace.yaml, so overrides in package.json
+# would be applied by local pnpm 10 but ignored by CI's pnpm 11 → `--frozen-lockfile`
+# mismatch.
+#
+# - react/react-dom: dedupe to a single copy. Sanity's transitive deps can pull a
+#   different 19.2.x patch than the plugin/studio, and two React copies trigger
+#   useMemoCache errors under the React 19 compiler.
+# - tmp: force the patched release (CVE fix; <0.2.4 allowed a symlink file write).
+# - @semantic-release/github: force the release-asset-upload fix. <=12.0.6 sends a
+#   numeric content-length that Node 24's undici rejects, leaving the GitHub release
+#   a draft; fixed in 12.0.9 (semantic-release/github#1224). Pinned transitively
+#   via @sanity/semantic-release-preset, so this override is what applies.
+overrides:
+  react: ^19.2.7
+  react-dom: ^19.2.7
+  tmp: ^0.2.4
+  '@semantic-release/github': ^12.0.9

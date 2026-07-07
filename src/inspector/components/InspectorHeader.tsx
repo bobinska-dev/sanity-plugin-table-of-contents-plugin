@@ -1,13 +1,16 @@
 import { CloseIcon } from '@sanity/icons'
 import { Box, Card, Flex, Text, type CardProps } from '@sanity/ui'
-import { type HTMLProps, type ReactNode } from 'react'
+import { type ElementType, type HTMLProps, type ReactNode } from 'react'
 import { useTranslation } from 'sanity'
 import { styled } from 'styled-components'
 
 import TooltipButton from './TooltipButton'
 
 export interface DocumentInspectorHeaderProps {
-  as?: CardProps['as']
+  // Polymorphic element type. @sanity/ui 3.3 narrowed `CardProps['as']` to the
+  // literal `"div"`, which rejects `as="header"`; `ElementType` is the correct
+  // polymorphic type (and what Sanity's own DocumentInspectorHeader uses).
+  as?: ElementType
   closeButtonLabel: string
   flex?: CardProps['flex']
   onClose: () => void
@@ -28,7 +31,7 @@ export function InspectorHeader(
   const { t } = useTranslation('table-of-contents')
 
   return (
-    <Root {...restProps} as={forwardedAs}>
+    <Root {...restProps} forwardedAs={forwardedAs}>
       <Flex padding={2}>
         <Box flex={1} padding={3}>
           <Text as="h1" size={1} weight="medium">
