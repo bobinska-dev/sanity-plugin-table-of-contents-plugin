@@ -28,13 +28,17 @@ const FieldRenderer: FunctionComponent<FieldRendererProps> = (props) => {
   const { contentFieldMembers, fieldNames, handleOpen } = props
   return contentFieldMembers.map((member) => {
     const fieldPath = member.field.path
-    const fieldSchemaType = member.field.schemaType as ArraySchemaType
+    const schemaType = member.field.schemaType
     const fieldValue = member.field.value as PortableTextBlock[] | { [key: string]: unknown }[]
 
-    // * Error when field is not an array
-    // only arrays and portable text fields are allowed
-    if (!isArray(member.field.value)) {
-      console.error(`Table Of Content Plugin Error: Field "${member.name}" is not an array.`)
+    // * Only array and Portable Text fields are supported. A configured field
+    // whose *schema type* isn't an array is a genuine misconfiguration, so
+    // surface it. (An empty field is handled separately below — that's not an
+    // error, just no entries yet.)
+    if (schemaType.jsonType !== 'array') {
+      console.error(
+        `Table Of Content Plugin Error: Field "${member.name}" is not an array. The table of contents only supports array and Portable Text fields.`,
+      )
       return (
         <Card tone={'caution'} key={member.key}>
           Error when resolving fields... Please check the console for more information.
@@ -42,8 +46,15 @@ const FieldRenderer: FunctionComponent<FieldRendererProps> = (props) => {
       )
     }
 
-    // * Portable Text
-    // check if schemaType.of has block type
+    // * An array field with no value yet simply has no entries — render nothing
+    // rather than logging an error on every render.
+    if (!isArray(fieldValue) || fieldValue.length === 0) {
+      return null
+    }
+
+    const fieldSchemaType = schemaType as ArraySchemaType
+
+    // * Portable Text — schemaType.of contains a block type
     if (fieldSchemaType.of.some((type) => type.name === 'block')) {
       return (
         <PortableTextRenderer
@@ -56,21 +67,17 @@ const FieldRenderer: FunctionComponent<FieldRendererProps> = (props) => {
       )
     }
 
-    // * Array of Sections
-    // check if schemaType.of has object type
-    if (!fieldSchemaType.of.some((type) => type.name === 'block')) {
-      return (
-        <SectionRenderer
-          fieldPath={fieldPath}
-          fieldSchemaType={fieldSchemaType}
-          fieldValue={fieldValue}
-          fieldNames={fieldNames}
-          handleOpen={handleOpen}
-          key={member.key}
-        />
-      )
-    }
-    return null
+    // * Array of Sections — schemaType.of contains object types
+    return (
+      <SectionRenderer
+        fieldPath={fieldPath}
+        fieldSchemaType={fieldSchemaType}
+        fieldValue={fieldValue}
+        fieldNames={fieldNames}
+        handleOpen={handleOpen}
+        key={member.key}
+      />
+    )
   })
 }
 export default FieldRenderer

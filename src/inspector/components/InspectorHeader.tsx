@@ -31,7 +31,7 @@ export function InspectorHeader(
   const { t } = useTranslation('table-of-contents')
 
   return (
-    <Root {...restProps} as={forwardedAs}>
+    <Root {...restProps} forwardedAs={forwardedAs}>
       <Flex padding={2}>
         <Box flex={1} padding={3}>
           <Text as="h1" size={1} weight="medium">
