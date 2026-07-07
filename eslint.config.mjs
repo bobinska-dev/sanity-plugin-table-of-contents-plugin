@@ -20,9 +20,12 @@ export default defineConfig([
     '**/*.js',
     '**/.eslintrc.js',
     '**/commitlint.config.js',
-    '**/dist',
+    '**/dist/**',
     '**/lint-staged.config.js',
-    '**/package.config.ts',
+    '**/package.config.mjs',
+    // The testing studio is its own workspace with its own eslint config; don't
+    // lint it from the plugin root.
+    '**/testing-studio/**',
   ]),
   {
     extends: fixupConfigRules(

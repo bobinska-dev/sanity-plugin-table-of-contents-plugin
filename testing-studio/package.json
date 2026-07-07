@@ -15,16 +15,17 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/vision": "^5.12.0",
-    "react": "^19.1",
-    "react-dom": "^19.1",
-    "sanity": "^5.12.0",
-    "styled-components": "^6.1.18",
-    "sanity-plugin-table-of-contents": "workspace:*"
+    "@sanity/vision": "^6.3.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-is": "^19.2.7",
+    "sanity": "^6.3.0",
+    "sanity-plugin-table-of-contents": "workspace:*",
+    "styled-components": "^6.4.3"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^6.0.0",
-    "@types/react": "^19.1",
+    "@types/react": "^19.2.17",
     "eslint": "^9.28",
     "prettier": "^3.5",
     "typescript": "^5.8"
